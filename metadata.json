@@ -1,0 +1,6 @@
+{
+  "name": "International Delhi Public School (IDPS)",
+  "description": "Official portal of International Delhi Public School Society — Pan-India K-12 school network, curriculum excellence, 35+ campuses, and franchise business opportunities.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
