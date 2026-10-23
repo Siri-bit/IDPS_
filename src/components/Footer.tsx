@@ -70,14 +70,6 @@ export const Footer: React.FC<FooterProps> = ({ onOpenEnquiry, onOpenBrochure })
                 <Download className="w-3.5 h-3.5 text-amber-300" />
                 <span>Brochure Reader (PDF)</span>
               </button>
-              <a
-                href="./IDPS_Website_Complete.zip"
-                download="IDPS_Website_Complete.zip"
-                className="px-4 py-2 rounded-xl text-xs font-bold bg-amber-400 text-stone-950 hover:bg-amber-300 transition-colors flex items-center gap-1.5 cursor-pointer shadow-sm"
-              >
-                <Download className="w-3.5 h-3.5 text-stone-950" />
-                <span>Download Website ZIP</span>
-              </a>
             </div>
 
           </div>
@@ -191,8 +183,8 @@ export const Footer: React.FC<FooterProps> = ({ onOpenEnquiry, onOpenBrochure })
                 </button>
               </li>
               <li>
-                <button onClick={() => scrollTo('financial-model')} className="hover:text-amber-300 transition-colors">
-                  Financial Projections (PDF 1 p. 10)
+                <button onClick={() => scrollTo('infrastructure')} className="hover:text-amber-300 transition-colors">
+                  Turnkey Infrastructure (PDF 1 p. 9)
                 </button>
               </li>
               <li>

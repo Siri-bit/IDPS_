@@ -27,8 +27,6 @@ export const EnquiryModal: React.FC<EnquiryModalProps> = ({
   defaultType = 'franchise',
   prefillNote = '',
 }) => {
-  if (!isOpen) return null;
-
   const [type, setType] = useState<'franchise' | 'admission'>(defaultType);
   const [submitted, setSubmitted] = useState(false);
   const [docketNumber, setDocketNumber] = useState('');
@@ -52,6 +50,14 @@ export const EnquiryModal: React.FC<EnquiryModalProps> = ({
       setMessage(prefillNote);
     }
   }, [prefillNote]);
+
+  useEffect(() => {
+    if (isOpen) {
+      setType(defaultType);
+    }
+  }, [isOpen, defaultType]);
+
+  if (!isOpen) return null;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

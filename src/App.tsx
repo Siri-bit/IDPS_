@@ -14,13 +14,11 @@ import { FaqSection } from './components/FaqSection';
 import { Footer } from './components/Footer';
 import { EnquiryModal } from './components/EnquiryModal';
 import { BrochureModal } from './components/BrochureModal';
-import { RoiCalculator } from './components/RoiCalculator';
 import { 
   Sparkles, 
   Download, 
   PhoneCall, 
   FileText, 
-  Calculator,
   MessageCircle
 } from 'lucide-react';
 
@@ -33,8 +31,6 @@ function AppContent() {
 
   const [brochureModalOpen, setBrochureModalOpen] = useState(false);
   const [brochureDoc, setBrochureDoc] = useState<'proposal' | 'services'>('proposal');
-
-  const [roiCalculatorOpen, setRoiCalculatorOpen] = useState(false);
 
   const handleOpenEnquiry = (type: 'franchise' | 'admission', prefillNote: string = '') => {
     setEnquiryType(type);
@@ -93,11 +89,10 @@ function AppContent() {
         {/* 3. About IDPS Society (Founding 2012, Dedications, Vision, Mission from PDF 1) */}
         <AboutSection />
 
-        {/* 4. Franchise Models & Financial Projections (7 models + PDF 1 p. 10 matrix) */}
+        {/* 4. Franchise Models & Project Setup (7 models from PDF 1) */}
         <FranchiseSection
           onOpenEnquiry={handleOpenEnquiry}
           onOpenBrochure={handleOpenBrochure}
-          onOpenCalculator={() => setRoiCalculatorOpen(true)}
         />
 
         {/* 5. 11 Core Support & Services (From PDF 2: In_2f58754a.pdf) */}
@@ -138,26 +133,15 @@ function AppContent() {
       {/* Floating Action Quick Access Dock */}
       <aside aria-label="Quick action shortcuts" className="fixed bottom-5 right-5 z-40 flex flex-col gap-2.5 items-end">
         
-        {/* Quick ROI Simulator Button */}
-        <button
-          onClick={() => setRoiCalculatorOpen(true)}
-          className="px-3.5 py-2 rounded-full text-xs font-bold bg-white text-stone-900 border border-stone-200 shadow-lg hover:shadow-xl hover:bg-stone-50 transition-all flex items-center gap-2 cursor-pointer group"
-          title="Simulate Franchise ROI"
-        >
-          <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
-          <Calculator className="w-3.5 h-3.5 text-amber-700" />
-          <span className="hidden sm:inline">ROI Simulator</span>
-        </button>
-
         {/* Quick Brochure Download Button */}
         <button
           onClick={() => handleOpenBrochure()}
           style={{ backgroundColor: themeConfig.primaryBg }}
-          className="px-3.5 py-2 rounded-full text-xs font-bold text-white shadow-lg hover:shadow-xl hover:opacity-95 transition-all flex items-center gap-2 cursor-pointer group"
+          className="px-4 py-2.5 rounded-full text-xs font-bold text-white shadow-xl hover:shadow-2xl hover:opacity-95 transition-all flex items-center gap-2 cursor-pointer group border border-amber-400/40"
           title="View & Download PDF Brochure"
         >
-          <Download className="w-3.5 h-3.5 text-amber-300 group-hover:-translate-y-0.5 transition-transform" />
-          <span className="hidden sm:inline">Brochure & PDF</span>
+          <Download className="w-4 h-4 text-amber-300 group-hover:-translate-y-0.5 transition-transform" />
+          <span className="hidden sm:inline">Official Brochure (PDF)</span>
         </button>
 
         {/* Primary Partner With Us CTA */}
@@ -172,24 +156,22 @@ function AppContent() {
       </aside>
 
       {/* Modals */}
-      <EnquiryModal
-        isOpen={enquiryModalOpen}
-        onClose={() => setEnquiryModalOpen(false)}
-        defaultType={enquiryType}
-        prefillNote={enquiryPrefill}
-      />
+      {enquiryModalOpen && (
+        <EnquiryModal
+          isOpen={enquiryModalOpen}
+          onClose={() => setEnquiryModalOpen(false)}
+          defaultType={enquiryType}
+          prefillNote={enquiryPrefill}
+        />
+      )}
 
-      <BrochureModal
-        isOpen={brochureModalOpen}
-        onClose={() => setBrochureModalOpen(false)}
-        defaultDoc={brochureDoc}
-      />
-
-      <RoiCalculator
-        isOpen={roiCalculatorOpen}
-        onClose={() => setRoiCalculatorOpen(false)}
-        onOpenEnquiry={handleOpenEnquiry}
-      />
+      {brochureModalOpen && (
+        <BrochureModal
+          isOpen={brochureModalOpen}
+          onClose={() => setBrochureModalOpen(false)}
+          defaultDoc={brochureDoc}
+        />
+      )}
 
     </div>
   );

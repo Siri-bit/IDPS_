@@ -39,16 +39,22 @@ export const BrochureModal: React.FC<BrochureModalProps> = ({
   onClose,
   defaultDoc = 'proposal',
 }) => {
-  if (!isOpen) return null;
-
   const { themeConfig } = useTheme();
   const [activeDoc, setActiveDoc] = useState<'proposal' | 'services'>(defaultDoc);
   const [activePage, setActivePage] = useState<number>(1);
   const [isGenerating, setIsGenerating] = useState<boolean>(false);
   const [downloadSuccess, setDownloadSuccess] = useState<string | null>(null);
 
+  React.useEffect(() => {
+    if (isOpen) {
+      setActiveDoc(defaultDoc);
+    }
+  }, [isOpen, defaultDoc]);
+
   const proposalPdfPath = "./assets/aistudio/IDPS_Franchise_Brochure_With_Logo__1__75c24130.pdf";
   const servicesPdfPath = "./assets/aistudio/In_2f58754a.pdf";
+
+  if (!isOpen) return null;
 
   // Handle reliable PDF download using jsPDF (guaranteed to display properly on all devices)
   const handleDownloadGeneratedPdf = () => {
@@ -429,62 +435,59 @@ export const BrochureModal: React.FC<BrochureModalProps> = ({
                     </div>
                   )}
 
-                  {/* Page 10: Financial Projections */}
+                  {/* Page 10: Academic Excellence & Affiliation */}
                   {activePage === 10 && (
                     <div className="space-y-4">
                       <h4 className="text-lg font-serif font-bold text-[#133568]">
-                        FINANCIAL PROJECTIONS & NET PROFIT ANALYSIS
+                        ACADEMIC EXCELLENCE & CBSE AFFILIATION GUIDANCE
                       </h4>
-                      <div className="overflow-x-auto">
-                        <table className="w-full text-xs text-left border border-stone-200 rounded-lg">
-                          <thead className="bg-[#133568] text-white">
-                            <tr>
-                              <th className="p-2.5">Operating Year</th>
-                              <th className="p-2.5">Students</th>
-                              <th className="p-2.5">Gross Revenue</th>
-                              <th className="p-2.5">Expenses</th>
-                              <th className="p-2.5">Franchisee Net Take-Home</th>
-                            </tr>
-                          </thead>
-                          <tbody className="divide-y divide-stone-200">
-                            {FINANCIAL_METRICS.projections.map((p, i) => (
-                              <tr key={i} className="hover:bg-amber-50/40">
-                                <td className="p-2.5 font-bold">{p.year}</td>
-                                <td className="p-2.5">{p.students} Students</td>
-                                <td className="p-2.5 font-semibold text-stone-900">{p.grossRevenue}</td>
-                                <td className="p-2.5 text-rose-700">{p.grossExpenses}</td>
-                                <td className="p-2.5 font-extrabold text-[#133568]">{p.netProfit}</td>
-                              </tr>
-                            ))}
-                          </tbody>
-                        </table>
+                      <p className="text-xs text-stone-600 leading-relaxed">
+                        The Central Society provides comprehensive academic leadership and affiliation advisory to ensure every IDPS campus achieves supreme educational benchmarks.
+                      </p>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                        <div className="p-3.5 rounded-xl bg-stone-50 border border-stone-200">
+                          <strong className="text-stone-900 block mb-1">Affiliation Dossier Support</strong>
+                          <p className="text-stone-600">End-to-end guidance through land inspection norms, fire/safety NOCs, building bylaws, and CBSE inspection panels.</p>
+                        </div>
+                        <div className="p-3.5 rounded-xl bg-stone-50 border border-stone-200">
+                          <strong className="text-stone-900 block mb-1">Standardized Curriculum & Syllabus</strong>
+                          <p className="text-stone-600">Standardized textbooks, daily lesson plans, assessment rubrics, and continuous educator mentoring.</p>
+                        </div>
+                        <div className="p-3.5 rounded-xl bg-stone-50 border border-stone-200">
+                          <strong className="text-stone-900 block mb-1">Faculty Recruitment & Training</strong>
+                          <p className="text-stone-600">Centralized recruitment panels, competency tests, and mandatory continuous professional teacher development programs.</p>
+                        </div>
+                        <div className="p-3.5 rounded-xl bg-stone-50 border border-stone-200">
+                          <strong className="text-stone-900 block mb-1">Periodic Quality Audits</strong>
+                          <p className="text-stone-600">Regular inspections by Central Academic Directors to evaluate teaching quality, infrastructure hygiene, and student outcomes.</p>
+                        </div>
                       </div>
                     </div>
                   )}
 
-                  {/* Page 11: Annexures */}
+                  {/* Page 11: Annexure A */}
                   {activePage === 11 && (
                     <div className="space-y-4">
                       <h4 className="text-lg font-serif font-bold text-[#133568]">
-                        ANNEXURE A & B: FEE COLLECTIONS & CORE SALARIES
+                        ANNEXURE A: FEE STRUCTURE & REVENUE POOL
                       </h4>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
-                        <div className="p-3 rounded-xl bg-stone-50 border border-stone-200">
-                          <strong className="block mb-2 text-stone-900">Annexure A: Annual Fee Structure</strong>
-                          <div className="space-y-1 text-[11px]">
-                            <div>Year 1 Fee Pool: ₹60,000 / student (95% Share)</div>
-                            <div>Year 2 Fee Pool: ₹66,000 / student (92% Share)</div>
-                            <div>Year 3 Fee Pool: ₹72,600 / student (92% Share)</div>
+                      <div className="p-4 rounded-xl bg-stone-50 border border-stone-200">
+                        <strong className="block mb-2 text-stone-900 text-sm">Annexure A: Annual Fee Benchmark & Collections</strong>
+                        <p className="text-xs text-stone-600 mb-3">
+                          Standardized student annual fee pools across operational years with high franchisee retention share:
+                        </p>
+                        <div className="space-y-2 text-xs">
+                          <div className="p-2.5 rounded-lg bg-white border border-stone-200 flex justify-between items-center">
+                            <span className="font-semibold text-stone-800">• Year 1 Annual Benchmark</span>
+                            <span className="font-bold text-[#133568]">₹60,000 / student (95% Share)</span>
                           </div>
-                        </div>
-                        <div className="p-3 rounded-xl bg-stone-50 border border-stone-200">
-                          <strong className="block mb-2 text-stone-900">Annexure B: Core Staffing Grid</strong>
-                          <div className="space-y-1 text-[11px]">
-                            <div>• 1 Administrative Officer</div>
-                            <div>• 1 Head Mistress</div>
-                            <div>• 14 Academic Teachers</div>
-                            <div>• 4 Dedicated Maids</div>
-                            <div>• 1 Security Guard</div>
+                          <div className="p-2.5 rounded-lg bg-white border border-stone-200 flex justify-between items-center">
+                            <span className="font-semibold text-stone-800">• Year 2 Annual Benchmark</span>
+                            <span className="font-bold text-[#133568]">₹66,000 / student (92% Share)</span>
+                          </div>
+                          <div className="p-2.5 rounded-lg bg-white border border-stone-200 flex justify-between items-center">
+                            <span className="font-semibold text-stone-800">• Year 3 Annual Benchmark</span>
+                            <span className="font-bold text-[#133568]">₹72,600 / student (92% Share)</span>
                           </div>
                         </div>
                       </div>

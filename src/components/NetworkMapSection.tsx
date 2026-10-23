@@ -93,12 +93,6 @@ export const NetworkMapSection: React.FC<NetworkMapSectionProps> = ({ onOpenEnqu
     const tcnt = (s: string) => TERRITORIES.filter(t => t.state === s).length;
     
     const getShade = (n: number) => {
-      if (theme === 'emerald') {
-        return n >= 5 ? "#092F24" : 
-               n >= 3 ? "#0F4C3A" : 
-               n >= 2 ? "#1B6D55" : 
-               n >= 1 ? "#489F84" : "#ffffff";
-      }
       return n >= 5 ? "#0B1D38" : 
              n >= 3 ? "#133568" : 
              n >= 2 ? "#1D4ED8" : 
@@ -184,7 +178,7 @@ export const NetworkMapSection: React.FC<NetworkMapSectionProps> = ({ onOpenEnqu
     // Add branch markers with theme colors
     filteredBranches.forEach(branch => {
       const isHead = branch.type === 'Head Branch';
-      const markerColor = theme === 'emerald' ? '#0F4C3A' : '#133568';
+      const markerColor = '#133568';
       
       const customHtml = isHead
         ? `<div class="custom-marker-head" style="background:#f59e0b; color:#0B1D38; border-color:#0B1D38;" title="${branch.name}">★</div>`

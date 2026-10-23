@@ -256,84 +256,117 @@ export const generateBrochurePdf = () => {
   doc.addPage();
   addPageHeader('MISSION & VISION', 'SECTION 02');
 
-  y = 34;
+  y = 33;
   doc.setTextColor(primaryBlue[0], primaryBlue[1], primaryBlue[2]);
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(14);
   doc.text('INSTITUTIONAL VISION & MISSION STATEMENTS', margin, y);
 
-  y += 8;
-  // Vision Box
-  doc.setFillColor(bgLight[0], bgLight[1], bgLight[2]);
-  doc.roundedRect(margin, y, contentWidth / 2 - 3, 100, 2, 2, 'F');
-  doc.setDrawColor(primaryBlue[0], primaryBlue[1], primaryBlue[2]);
-  doc.setLineWidth(0.5);
-  doc.roundedRect(margin, y, contentWidth / 2 - 3, 100, 2, 2, 'S');
+  y += 7;
+  const colWidth = contentWidth / 2 - 3;
+  const boxHeight = 105;
 
+  // --- 1. Vision Box (Left Column) ---
+  doc.setFillColor(bgLight[0], bgLight[1], bgLight[2]);
+  doc.roundedRect(margin, y, colWidth, boxHeight, 2, 2, 'F');
+  doc.setDrawColor(primaryBlue[0], primaryBlue[1], primaryBlue[2]);
+  doc.setLineWidth(0.6);
+  doc.roundedRect(margin, y, colWidth, boxHeight, 2, 2, 'S');
+
+  // Vision Header Banner
+  doc.setFillColor(primaryBlue[0], primaryBlue[1], primaryBlue[2]);
+  doc.roundedRect(margin, y, colWidth, 10, 2, 2, 'F');
+  doc.rect(margin, y + 6, colWidth, 4, 'F'); // square bottom corners of header
+  doc.setTextColor(255, 255, 255);
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(10);
+  doc.text('OUR VISION', margin + 6, y + 7);
+
+  // Vision Intro
   doc.setTextColor(primaryBlue[0], primaryBlue[1], primaryBlue[2]);
   doc.setFont('helvetica', 'bold');
-  doc.setFontSize(11);
-  doc.text('OUR VISION', margin + 5, y + 9);
-
-  doc.setTextColor(textDark[0], textDark[1], textDark[2]);
-  doc.setFont('helvetica', 'normal');
-  doc.setFontSize(7.5);
-  doc.text('To provide a stimulating, inclusive, and inspiring environment where children:', margin + 5, y + 15, { maxWidth: contentWidth / 2 - 13 });
+  doc.setFontSize(8);
+  doc.text('To provide a stimulating learning environment where children:', margin + 6, y + 16);
 
   const visionPoints = [
-    'Enjoy Learning & Explore Concepts Passionately',
-    'Discover Their True Hidden Potential & Talents',
-    'Build Core Confidence & Dynamic Public Presence',
-    'Develop Creativity, Analytical & Abstract Logic',
-    'Learn Proactive Leadership & Teamwork Skills',
-    'Embrace Modern Challenges Willingly',
-    'Achieve Supreme Academic Excellence'
+    'Enjoy learning and explore concepts with passion',
+    'Discover their true individual potential and talents',
+    'Build unshakeable confidence and articulate presence',
+    'Develop creative thinking, analytical logic, and enquiry',
+    'Learn proactive leadership and collaborative teamwork',
+    'Embrace modern societal and technological challenges',
+    'Achieve supreme academic excellence in examinations'
   ];
 
-  visionPoints.forEach((p, i) => {
-    doc.text(`✔  ${p}`, margin + 5, y + 28 + i * 9.5, { maxWidth: contentWidth / 2 - 14 });
+  let visionY = y + 23;
+  visionPoints.forEach((point) => {
+    // Vector bullet dot
+    doc.setFillColor(primaryBlue[0], primaryBlue[1], primaryBlue[2]);
+    doc.circle(margin + 7, visionY - 1, 1, 'F');
+
+    doc.setTextColor(textDark[0], textDark[1], textDark[2]);
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(7.5);
+    const lines = doc.splitTextToSize(point, colWidth - 14);
+    doc.text(lines, margin + 11, visionY);
+    visionY += lines.length * 3.6 + 2.4;
   });
 
-  // Mission Box
-  const missionX = margin + contentWidth / 2 + 3;
+  // --- 2. Mission Box (Right Column) ---
+  const missionX = margin + colWidth + 6;
   doc.setFillColor(bgLight[0], bgLight[1], bgLight[2]);
-  doc.roundedRect(missionX, y, contentWidth / 2 - 3, 100, 2, 2, 'F');
+  doc.roundedRect(missionX, y, colWidth, boxHeight, 2, 2, 'F');
   doc.setDrawColor(gold[0], gold[1], gold[2]);
-  doc.setLineWidth(0.5);
-  doc.roundedRect(missionX, y, contentWidth / 2 - 3, 100, 2, 2, 'S');
+  doc.setLineWidth(0.6);
+  doc.roundedRect(missionX, y, colWidth, boxHeight, 2, 2, 'S');
 
+  // Mission Header Banner
+  doc.setFillColor(gold[0], gold[1], gold[2]);
+  doc.roundedRect(missionX, y, colWidth, 10, 2, 2, 'F');
+  doc.rect(missionX, y + 6, colWidth, 4, 'F');
+  doc.setTextColor(0, 0, 0);
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(10);
+  doc.text('OUR MISSION', missionX + 6, y + 7);
+
+  // Mission Intro
   doc.setTextColor(gold[0], gold[1], gold[2]);
   doc.setFont('helvetica', 'bold');
-  doc.setFontSize(11);
-  doc.text('OUR MISSION', missionX + 5, y + 9);
-
-  doc.setTextColor(textDark[0], textDark[1], textDark[2]);
-  doc.setFont('helvetica', 'normal');
-  doc.setFontSize(7.5);
-  doc.text('Explicit commitments shaping our everyday focus to achieve global learning parameters:', missionX + 5, y + 15, { maxWidth: contentWidth / 2 - 13 });
+  doc.setFontSize(8);
+  doc.text('Commitments shaping our everyday focus to achieve global standards:', missionX + 6, y + 16);
 
   const missionPoints = [
-    'Develop high self-esteem & unshakeable confidence',
-    'Create passionate lifelong learners ready for evolution',
-    'Cultivate deep moral and ethical core human values',
-    'Encourage robust cultural awareness & social responsibility',
-    'Promote discipline, active compassion, and leadership',
-    'Provide holistic and strictly inclusive education layout',
-    'Prepare students completely for future global structural challenges'
+    'Develop high self-esteem and unshakeable confidence',
+    'Create passionate lifelong learners ready for the future',
+    'Cultivate deep moral, civic, and ethical human values',
+    'Encourage cultural awareness and social responsibility',
+    'Promote discipline, active compassion, and servant leadership',
+    'Provide holistic, supportive, and inclusive schooling',
+    'Prepare students thoroughly for higher education & careers'
   ];
 
-  missionPoints.forEach((p, i) => {
-    doc.text(`★  ${p}`, missionX + 5, y + 28 + i * 9.5, { maxWidth: contentWidth / 2 - 14 });
+  let missionY = y + 23;
+  missionPoints.forEach((point) => {
+    // Vector bullet dot
+    doc.setFillColor(gold[0], gold[1], gold[2]);
+    doc.circle(missionX + 7, missionY - 1, 1, 'F');
+
+    doc.setTextColor(textDark[0], textDark[1], textDark[2]);
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(7.5);
+    const lines = doc.splitTextToSize(point, colWidth - 14);
+    doc.text(lines, missionX + 11, missionY);
+    missionY += lines.length * 3.6 + 2.4;
   });
 
-  // Key Strategic Advantages (PDF 1 Page 4)
-  y += 112;
+  // --- 3. Key Strategic Advantages (Bottom of Page 3) ---
+  y += boxHeight + 8;
   doc.setTextColor(primaryBlue[0], primaryBlue[1], primaryBlue[2]);
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(12);
   doc.text('WHY CHOOSE IDPS: 4 STRATEGIC ADVANTAGES', margin, y);
 
-  y += 6;
+  y += 5;
   const pillars = [
     { title: 'ACADEMIC EXCELLENCE', pts: ['Modern Teaching Methodologies', 'Qualified & Extensively Trained Faculty', 'Student-Centric Learning Approach', 'Continuous Evaluation & System Assessment'] },
     { title: 'MODERN INFRASTRUCTURE', pts: ['Smart Interactive Digital Classrooms', 'Advanced Science & Computer Laboratories', 'Resourceful Library Facilities', 'CCTV Surveillance & Advanced RO Systems'] },
@@ -345,11 +378,11 @@ export const generateBrochurePdf = () => {
     const col = idx % 2;
     const row = Math.floor(idx / 2);
     const boxX = margin + col * (contentWidth / 2);
-    const boxY = y + row * 38;
+    const boxY = y + row * 37;
 
     doc.setFillColor(255, 255, 255);
     doc.setDrawColor(226, 232, 240);
-    doc.roundedRect(boxX, boxY, contentWidth / 2 - 3, 34, 1.5, 1.5, 'FD');
+    doc.roundedRect(boxX, boxY, contentWidth / 2 - 3, 33, 1.5, 1.5, 'FD');
 
     doc.setTextColor(primaryBlue[0], primaryBlue[1], primaryBlue[2]);
     doc.setFont('helvetica', 'bold');
@@ -360,7 +393,10 @@ export const generateBrochurePdf = () => {
     doc.setFont('helvetica', 'normal');
     doc.setFontSize(7);
     p.pts.forEach((pt, pIdx) => {
-      doc.text(`• ${pt}`, boxX + 4, boxY + 12 + pIdx * 5);
+      // Vector bullet
+      doc.setFillColor(primaryBlue[0], primaryBlue[1], primaryBlue[2]);
+      doc.circle(boxX + 5, boxY + 11.5 + pIdx * 5, 0.7, 'F');
+      doc.text(pt, boxX + 8, boxY + 12.5 + pIdx * 5);
     });
   });
 
@@ -514,7 +550,7 @@ export const generateBrochurePdf = () => {
     doc.setTextColor(gold[0], gold[1], gold[2]);
     doc.setFont('helvetica', 'normal');
     doc.setFontSize(7);
-    doc.text(`— ${s.subtitle}`, margin + 11 + doc.getTextWidth(s.title) + 2, y + 6);
+    doc.text(`- ${s.subtitle}`, margin + 11 + doc.getTextWidth(s.title) + 2, y + 6);
 
     doc.setTextColor(textDark[0], textDark[1], textDark[2]);
     doc.setFontSize(7);
@@ -525,67 +561,51 @@ export const generateBrochurePdf = () => {
 
   addPageFooter(5, 7);
 
-  // ================= PAGE 6: FINANCIAL PROJECTIONS & ANNEXURES =================
+  // ================= PAGE 6: ACADEMIC EXCELLENCE & ANNEXURE A =================
   doc.addPage();
-  addPageHeader('FINANCIAL PROJECTIONS & NET PROFIT', 'SECTION 05');
+  addPageHeader('ACADEMIC EXCELLENCE & ANNEXURE A', 'SECTION 05');
 
   y = 32;
   doc.setTextColor(primaryBlue[0], primaryBlue[1], primaryBlue[2]);
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(14);
-  doc.text('3-YEAR FINANCIAL PROJECTIONS (PDF 1 PAGE 10)', margin, y);
+  doc.text('CENTRAL ACADEMIC GOVERNANCE & AFFILIATION', margin, y);
 
   y += 5;
   doc.setTextColor(textMuted[0], textMuted[1], textMuted[2]);
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(8);
-  doc.text('Conservative financial modelling based on standardized admissions intake and fee retention.', margin, y);
-
-  y += 6;
-  // Financial Table
-  doc.setFillColor(primaryDarkBlue[0], primaryDarkBlue[1], primaryDarkBlue[2]);
-  doc.rect(margin, y, contentWidth, 7, 'F');
-
-  doc.setTextColor(255, 255, 255);
-  doc.setFont('helvetica', 'bold');
-  doc.setFontSize(7.5);
-  doc.text('OPERATING TIMELINE', margin + 4, y + 5);
-  doc.text('STUDENTS', margin + 50, y + 5);
-  doc.text('GROSS REVENUE', margin + 80, y + 5);
-  doc.text('OPERATIONAL EXP.', margin + 120, y + 5);
-  doc.text('FRANCHISEE TAKE-HOME', margin + 155, y + 5);
+  doc.text('Delivering top-tier CBSE alignment, teacher training, and structured academic oversight.', margin, y);
 
   y += 7;
-  FINANCIAL_METRICS.projections.forEach((p, idx) => {
-    const isEven = idx % 2 === 0;
-    doc.setFillColor(isEven ? 255 : 248, isEven ? 255 : 250, isEven ? 255 : 252);
-    doc.rect(margin, y, contentWidth, 12, 'F');
+  const governancePillars = [
+    { title: 'Affiliation Guidance', desc: 'Complete support for CBSE/ICSE accreditation, land inspection compliance, fire NOCs, and society bylaws.' },
+    { title: 'Curriculum & Syllabus', desc: 'Centralized textbook adoption, term-wise split syllabus, daily pedagogical guides, and summative assessments.' },
+    { title: 'Faculty Recruitment', desc: 'Centralized candidate screening, written competency assessments, and intensive pedagogical induction workshops.' },
+    { title: 'Quality Audits', desc: 'Quarterly academic inspections by Central Directors to review instructional delivery and evaluate learning outcomes.' }
+  ];
+
+  governancePillars.forEach(p => {
+    doc.setFillColor(bgLight[0], bgLight[1], bgLight[2]);
+    doc.roundedRect(margin, y, contentWidth, 12, 1.5, 1.5, 'F');
     doc.setDrawColor(226, 232, 240);
-    doc.setLineWidth(0.2);
-    doc.line(margin, y + 12, margin + contentWidth, y + 12);
-
-    doc.setTextColor(textDark[0], textDark[1], textDark[2]);
-    doc.setFont('helvetica', 'bold');
-    doc.setFontSize(8);
-    doc.text(p.year, margin + 4, y + 7.5);
-
-    doc.setFont('helvetica', 'normal');
-    doc.text(String(p.students), margin + 50, y + 7.5);
-    doc.text(p.grossRevenue, margin + 80, y + 7.5);
-
-    doc.setTextColor(185, 28, 28);
-    doc.text(p.grossExpenses, margin + 120, y + 7.5);
+    doc.roundedRect(margin, y, contentWidth, 12, 1.5, 1.5, 'D');
 
     doc.setTextColor(primaryBlue[0], primaryBlue[1], primaryBlue[2]);
     doc.setFont('helvetica', 'bold');
-    doc.setFontSize(9);
-    doc.text(p.netProfit, margin + 155, y + 7.5);
+    doc.setFontSize(8.5);
+    doc.text(p.title, margin + 4, y + 5);
 
-    y += 12;
+    doc.setTextColor(textDark[0], textDark[1], textDark[2]);
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(7);
+    doc.text(p.desc, margin + 4, y + 9.5);
+
+    y += 15;
   });
 
   // Annexure A: Fee Structure Table
-  y += 10;
+  y += 4;
   doc.setTextColor(primaryBlue[0], primaryBlue[1], primaryBlue[2]);
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(11);
@@ -620,43 +640,6 @@ export const generateBrochurePdf = () => {
 
     y += 7;
   });
-
-  // Annexure B: Staff Allocation Grid
-  y += 8;
-  doc.setTextColor(primaryBlue[0], primaryBlue[1], primaryBlue[2]);
-  doc.setFont('helvetica', 'bold');
-  doc.setFontSize(11);
-  doc.text('ANNEXURE "B": CORE STAFF ALLOCATION GRID', margin, y);
-
-  y += 4;
-  FINANCIAL_METRICS.staffAllocationGrid.forEach((staff) => {
-    doc.setFillColor(255, 255, 255);
-    doc.setDrawColor(226, 232, 240);
-    doc.rect(margin, y, contentWidth, 6, 'F');
-    doc.line(margin, y + 6, margin + contentWidth, y + 6);
-
-    doc.setTextColor(textDark[0], textDark[1], textDark[2]);
-    doc.setFont('helvetica', 'bold');
-    doc.setFontSize(7);
-    doc.text(staff.role, margin + 4, y + 4.2);
-
-    doc.setFont('helvetica', 'normal');
-    doc.setTextColor(textMuted[0], textMuted[1], textMuted[2]);
-    doc.text(staff.note, margin + 65, y + 4.2);
-
-    doc.setTextColor(primaryBlue[0], primaryBlue[1], primaryBlue[2]);
-    doc.setFont('helvetica', 'bold');
-    doc.text(`${staff.count} Allocated`, margin + 165, y + 4.2);
-
-    y += 6;
-  });
-
-  // Disclaimers note
-  y += 6;
-  doc.setTextColor(textMuted[0], textMuted[1], textMuted[2]);
-  doc.setFont('helvetica', 'italic');
-  doc.setFontSize(6.5);
-  doc.text('Note: Financial projections are indicative for planning and depend on target city tiering and infrastructure scale.', margin, y);
 
   addPageFooter(6, 7);
 

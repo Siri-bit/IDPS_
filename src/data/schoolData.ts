@@ -1150,7 +1150,7 @@ export const SUPPORT_SERVICES: SupportService[] = [
   },
   {
     id: 10,
-    title: "Curriculum & Syllabi",
+    title: "Curriculum & Syllabus",
     subtitle: "Standardized Academic Content Delivery",
     description: "Centrally structured curriculum thoroughly aligned with CBSE and international standards, accompanied by detailed lesson plans, worksheets, and teacher resource guides.",
     keyDeliverables: ["Structured syllabus books & workbooks", "Daily lesson plans & pedagogical guides", "Formative & summative examination papers", "STEM & co-curricular activity modules"],
